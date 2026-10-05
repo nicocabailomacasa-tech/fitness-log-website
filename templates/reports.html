@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Workout Logs{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Workout Logs</h1>
+    <a href="{{ url_for('add_log') }}" class="btn btn-primary">+ Add Workout</a>
+</div>
+
+<div class="panel">
+    {% if records %}
+    <table>
+        <thead>
+            <tr>
+                <th>Activity</th>
+                <th>Type</th>
+                <th>Duration</th>
+                <th>Calories</th>
+                <th>Date</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record[1] }}</td>
+                <td>{{ record[2] }}</td>
+                <td>{{ record[3] }} min</td>
+                <td>{{ record[4] }}</td>
+                <td>{{ record[5] }}</td>
+                <td>{{ record[6] or '—' }}</td>
+                <td>
+                    <div class="actions">
+                        <a href="{{ url_for('edit_log', log_id=record[0]) }}" class="btn btn-small btn-secondary">Edit</a>
+                        <form method="POST" action="{{ url_for('delete_log', log_id=record[0]) }}" onsubmit="return confirm('Delete this workout log?');">
+                            <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No workout logs recorded yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

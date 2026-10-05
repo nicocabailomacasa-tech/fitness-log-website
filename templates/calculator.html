@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Fitness Reports</h1>
+</div>
+
+<div class="panel">
+    <h3>Last 30 Days</h3>
+    {% if daily_summary %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total Minutes</th>
+                <th>Total Calories</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for workout_day, total_duration, total_calories in daily_summary %}
+            <tr>
+                <td>{{ workout_day }}</td>
+                <td>{{ total_duration }}</td>
+                <td>{{ total_calories }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No data for the recent period.</p>
+    {% endif %}
+</div>
+
+<div class="panel">
+    <h3>Monthly Summary</h3>
+    {% if monthly_summary %}
+    <table>
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Sessions</th>
+                <th>Total Minutes</th>
+                <th>Total Calories</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for month_label, total_duration, sessions, total_calories in monthly_summary %}
+            <tr>
+                <td>{{ month_label }}</td>
+                <td>{{ sessions }}</td>
+                <td>{{ total_duration }}</td>
+                <td>{{ total_calories }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No monthly data available.</p>
+    {% endif %}
+</div>
+
+<div class="panel">
+    <h3>Activity Breakdown</h3>
+    {% if activity_breakdown %}
+    <table>
+        <thead>
+            <tr>
+                <th>Exercise Type</th>
+                <th>Workouts</th>
+                <th>Total Minutes</th>
+                <th>Total Calories</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exercise_type, workouts, total_duration, total_calories in activity_breakdown %}
+            <tr>
+                <td>{{ exercise_type }}</td>
+                <td>{{ workouts }}</td>
+                <td>{{ total_duration }}</td>
+                <td>{{ total_calories }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No activity breakdown available.</p>
+    {% endif %}
+</div>
+{% endblock %}
